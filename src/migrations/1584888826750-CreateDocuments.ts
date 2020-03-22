@@ -19,7 +19,7 @@ export class CreateDocuments1584888826750 implements MigrationInterface {
       name: 'document_revisions',
       columns: [
         { name: 'id', type: 'integer', isPrimary: true, isGenerated: true },
-        { name: 'revision', type: 'integer' },
+        { name: 'revision_number', type: 'integer' },
         { name: 'document_id', type: 'integer' },
         { name: 'changelog', type: 'text', isNullable: true },
         { name: 'description', type: 'text', isNullable: true },
@@ -28,7 +28,7 @@ export class CreateDocuments1584888826750 implements MigrationInterface {
         { name: 'updated_at', type: 'timestamp with time zone', default: 'now()' },
       ],
       indices: [
-        { columnNames: ['document_id', 'revision'] },
+        { columnNames: ['document_id', 'revision_number'] },
       ],
     }));
   }

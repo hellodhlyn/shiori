@@ -10,7 +10,7 @@ export default class DocumentRevision {
   public id: number;
 
   @Column()
-  public revision: number;
+  public revisionNumber: number;
 
   @ManyToOne(() => Document, (doc) => doc.revisions)
   public document: Document;

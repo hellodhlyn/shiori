@@ -1,0 +1,45 @@
+schema {
+  query:    RootQuery
+  mutation: RootMutation
+}
+
+type RootQuery {
+  document(title: String!): Document
+}
+
+type RootMutation {
+  createDocument(input: CreateDocumentInput): Document!
+  createRevision(input: CreateRevisionInput): Revision!
+}
+
+type Document {
+  title:        String!
+  lastRevision: Revision!
+  revisions:    [Revision!]!
+  createdAt:    String!
+  updatedAt:    String!
+}
+
+type Revision {
+  document:       Document!
+  revisionNumber: Int!
+  changelog:      String
+  description:    String
+  body:           String!
+  createdAt:      String!
+  updatedAt:      String!
+}
+
+input CreateDocumentInput {
+  title:       String!
+  changelog:   String
+  description: String
+  body:        String!
+}
+
+input CreateRevisionInput {
+  title:       String!
+  changelog:   String
+  description: String
+  body:        String!
+}

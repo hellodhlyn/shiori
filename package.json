@@ -1,5 +1,5 @@
 {
-  "name": "nodejs-seed",
+  "name": "shiori",
   "version": "1.0.0",
   "author": "Do Hoerin <lyn@lynlab.co.kr>",
   "license": "MIT",
@@ -11,9 +11,18 @@
     "debug": "nodemon --watch src --ext ts --exec 'yarn build && yarn start'",
     "prebuild": "rimraf ./dist",
     "build": "tsc",
-    "start": "node ."
+    "start": "node .",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js --config src/ormconfig.ts",
+    "typeorm:migrate": "yarn typeorm migration:run",
+    "typeorm:revert": "yarn typeorm migration:revert",
+    "typeorm:show": "yarn typeorm migration:show"
   },
-  "dependencies": {},
+  "dependencies": {
+    "pg": "^7.18.2",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.24",
+    "typeorm-naming-strategies": "^1.1.0"
+  },
   "devDependencies": {
     "@types/chai": "^4.2.9",
     "@types/chai-as-promised": "^7.1.2",

@@ -15,6 +15,9 @@ yarn
 
 ### Test
 ```sh
+# Start local database
+docker-compose up -d db
+
 # Run lint
 yarn lint
 

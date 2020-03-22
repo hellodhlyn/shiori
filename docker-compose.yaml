@@ -1,0 +1,10 @@
+version: '3'
+services:
+  db:
+    image: postgres:10.11
+    container_name: shiori-db
+    environment:
+      POSTGRES_DB: shiori
+      POSTGRES_PASSWORD: rootpass
+    ports:
+    - 5432:5432

@@ -29,6 +29,7 @@
   },
   "ignorePatterns": [
     "dist/*",
-    "test/*"
+    "test/*",
+    "src/migrations/*"
   ]
 }

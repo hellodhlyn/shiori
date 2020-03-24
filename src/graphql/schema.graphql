@@ -3,21 +3,24 @@ schema {
   mutation: RootMutation
 }
 
+scalar DateTime
+
 type RootQuery {
   document(title: String!): Document
+  randomDocument:           Document
 }
 
 type RootMutation {
-  createDocument(input: CreateDocumentInput): Document!
-  createRevision(input: CreateRevisionInput): Revision!
+  createDocument(input: CreateDocumentInput!): Document!
+  createRevision(input: CreateRevisionInput!): Revision!
 }
 
 type Document {
   title:        String!
   lastRevision: Revision!
   revisions:    [Revision!]!
-  createdAt:    String!
-  updatedAt:    String!
+  createdAt:    DateTime!
+  updatedAt:    DateTime!
 }
 
 type Revision {
@@ -26,8 +29,13 @@ type Revision {
   changelog:      String
   description:    String
   body:           String!
-  createdAt:      String!
-  updatedAt:      String!
+  createdAt:      DateTime!
+  updatedAt:      DateTime!
+}
+
+input RevisionsInput {
+  page:  Int!
+  count: Int!
 }
 
 input CreateDocumentInput {

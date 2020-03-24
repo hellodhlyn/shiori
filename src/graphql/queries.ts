@@ -12,4 +12,8 @@ export default class Queries {
   async document(args: {title: string}): Promise<Document> {
     return this.documentService.findByTitle(args.title);
   }
+
+  async randomDocument(): Promise<Document> {
+    return this.documentService.findRandom();
+  }
 }

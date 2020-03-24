@@ -19,6 +19,7 @@
     "typeorm:show": "yarn typeorm migration:show"
   },
   "dependencies": {
+    "@koa/cors": "2",
     "graphql": "^14.6.0",
     "koa": "^2.11.0",
     "koa-graphql": "^0.8.0",
@@ -37,6 +38,7 @@
     "@types/koa": "^2.11.2",
     "@types/koa-graphql": "^0.8.3",
     "@types/koa-mount": "^4.0.0",
+    "@types/koa__cors": "^3.0.1",
     "@types/mocha": "^7.0.1",
     "@types/mocha-prepare": "^0.1.0",
     "@types/node": "^12.12.28",

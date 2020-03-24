@@ -1,3 +1,4 @@
+import cors from '@koa/cors';
 import Koa from 'koa';
 import mount from 'koa-mount';
 import graphql from 'koa-graphql';
@@ -22,11 +23,14 @@ export default class ApiApplication {
 
   initialize(): void {
     const app = new Koa();
+
+    app.use(cors());
     app.use(mount('/graphql', graphql({
       schema,
       rootValue: {
         // Queries
         document: (args: {title: string}): Promise<Document> => this.queries.document(args),
+        randomDocument: (): Promise<Document> => this.queries.randomDocument(),
 
         // Mutations
         createDocument:

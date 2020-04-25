@@ -9,6 +9,7 @@ import Queries from '../graphql/queries';
 import Mutations, { CreateDocumentInput, CreateRevisionInput } from '../graphql/mutations';
 import Document from '../models/document';
 import DocumentRevision from '../models/document-revision';
+import { Connection } from '../graphql/connection';
 
 @Service()
 export default class ApiApplication {
@@ -31,6 +32,7 @@ export default class ApiApplication {
         // Queries
         document: (args: {title: string}): Promise<Document> => this.queries.document(args),
         randomDocument: (): Promise<Document> => this.queries.randomDocument(),
+        revisions: (args: {last: number}): Promise<Connection<DocumentRevision>> => this.queries.revisions(args),
 
         // Mutations
         createDocument:

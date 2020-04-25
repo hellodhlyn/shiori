@@ -8,11 +8,19 @@ scalar DateTime
 type RootQuery {
   document(title: String!): Document
   randomDocument:           Document
+  revisions(last: Int):     RevisionConnection!
 }
 
 type RootMutation {
   createDocument(input: CreateDocumentInput!): Document!
   createRevision(input: CreateRevisionInput!): Revision!
+}
+
+type PageInfo {
+  startCursor:     String
+  endCursor:       String
+  hasPreviousPage: Boolean!
+  hasNextPage:     Boolean!
 }
 
 type Document {
@@ -31,6 +39,17 @@ type Revision {
   body:           String!
   createdAt:      DateTime!
   updatedAt:      DateTime!
+}
+
+type RevisionEdge {
+  cursor: String!
+  node:   Revision
+}
+
+type RevisionConnection {
+  edges:    [RevisionEdge]
+  nodes:    [Revision]
+  pageInfo: PageInfo
 }
 
 input RevisionsInput {

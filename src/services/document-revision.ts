@@ -2,6 +2,7 @@ import { Service } from 'typedi';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
 
+import { QueryResult } from './index';
 import Document from '../models/document';
 import DocumentRevision from '../models/document-revision';
 
@@ -11,6 +12,16 @@ export default class DocumentRevisionService {
     @InjectRepository(Document) private readonly documentRepository: Repository<Document>,
     @InjectRepository(DocumentRevision) private readonly revisionRepository: Repository<DocumentRevision>,
   ) {}
+
+  async query(last: number): Promise<QueryResult<DocumentRevision>> {
+    const results = await this.revisionRepository.find({
+      order: { id: 'DESC' }, take: last + 1, relations: ['document'],
+    });
+    return {
+      items: results.slice(0, last).sort((a, b) => (a.id - b.id)),
+      pageInfo: { hasPrevious: false, hasNext: results.length > last },
+    };
+  }
 
   async create(title: string, body: string, description?: string, changelog?: string): Promise<DocumentRevision> {
     const doc = await this.documentRepository.findOne({ where: { title }, relations: ['revisions'] });

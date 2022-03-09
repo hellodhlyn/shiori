@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: shiori-db
+    networks:
+      - shiori-net
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: shiori_development
+      POSTGRES_USER: shiori
+      POSTGRES_PASSWORD: rootpass
+
+networks:
+  shiori-net:

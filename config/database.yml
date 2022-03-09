@@ -1,0 +1,24 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: shiori_development
+  username: shiori
+  password: rootpass  # Don't mind. Just only for local development :)
+  host: 127.0.0.1
+  port: 5432
+
+test:
+  <<: *default
+  database: shiori_test
+
+production:
+  <<: *default
+  database: shiori_production
+  username: <%= ENV["SHIORI_DATABASE_USERNAME"] %>
+  password: <%= ENV["SHIORI_DATABASE_PASSWORD"] %>
+  host: <%= ENV["SHIORI_DATABASE_HOST"] %>
+  port: <%= ENV["SHIORI_DATABASE_PORT"] %>

@@ -1,6 +1,6 @@
 module Types
   module NodeType
-    include Types::BaseInterface
+    include Types::Base::Interface
     include GraphQL::Types::Relay::NodeBehaviors
   end
 end

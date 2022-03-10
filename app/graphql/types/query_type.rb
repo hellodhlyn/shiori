@@ -8,10 +8,10 @@ module Types
     end
 
     field :post, Types::PostType do
-      argument :site, String
-      argument :namespace, String
-      argument :slug, String
-      argument :uuid, String
+      argument :site, String, required: false
+      argument :namespace, String, required: false
+      argument :slug, String, required: false
+      argument :uuid, String, required: false
       validates required: { one_of: [[:site, :namespace, :slug], :uuid] }
     end
 
@@ -19,7 +19,7 @@ module Types
       Site.find_by(slug: slug)
     end
 
-    def post(site:, namespace:, slug:, uuid:)
+    def post(site: nil, namespace: nil, slug: nil, uuid: nil)
       return Post.find_by(uuid: uuid) if uuid.present?
 
       site      = Site.find_by(slug: site) or return nil

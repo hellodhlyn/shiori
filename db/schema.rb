@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_09_070323) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_10_140902) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_09_070323) do
     t.string "thumbnail_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "author_id"
+    t.index ["author_id"], name: "index_posts_on_author_id"
     t.index ["namespace_id"], name: "index_posts_on_namespace_id"
     t.index ["uuid"], name: "index_posts_on_uuid", unique: true
   end
@@ -43,6 +45,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_09_070323) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_sites_on_slug", unique: true
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "user_id", null: false
+    t.string "display_name", null: false
+    t.string "email", null: false
+    t.string "profile_image_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["display_name"], name: "index_users_on_display_name", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["user_id"], name: "index_users_on_user_id", unique: true
   end
 
 end

@@ -2,6 +2,7 @@ module Types
   class PostType < Types::Base::Object
     field :site, Types::SiteType, null: false
     field :namespace, Types::NamespaceType, null: false
+    field :author, Types::UserType, null: false
     field :uuid, String, null: false
     field :slug, String, null: false
     field :title, String, null: false

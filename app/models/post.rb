@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
   belongs_to :namespace
+  belongs_to :author, class_name: "User"
   delegate :site, :to => :namespace
 
   before_validation :generate_uuid, :on => :create

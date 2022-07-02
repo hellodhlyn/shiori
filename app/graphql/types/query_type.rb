@@ -15,6 +15,10 @@ module Types
       validates required: { one_of: [[:site, :namespace, :slug], :uuid] }
     end
 
+    field :user, Types::UserType do
+      argument :user_id, String, required: true
+    end
+
     def site(slug:)
       Site.find_by(slug: slug)
     end
@@ -25,6 +29,10 @@ module Types
       site      = Site.find_by(slug: site) or return nil
       namespace = Namespace.find_by(site: site, slug: namespace) or return nil
       Post.find_by(namespace: namespace, slug: slug)
+    end
+
+    def user(user_id:)
+      User.find_by(user_id: user_id)
     end
   end
 end

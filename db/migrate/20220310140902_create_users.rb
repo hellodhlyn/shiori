@@ -12,8 +12,6 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.index :email, unique: true
     end
 
-    add_column :posts, :author_id, :bigint
-
-    add_index :posts, :author_id
+    add_reference :posts, :author
   end
 end

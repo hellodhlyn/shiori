@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_10_140902) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_02_145141) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "blobs", force: :cascade do |t|
+    t.string "uuid", null: false
+    t.string "type"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uuid"], name: "index_blobs_on_uuid", unique: true
+  end
 
   create_table "namespaces", force: :cascade do |t|
     t.bigint "site_id"
@@ -22,6 +31,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_10_140902) do
     t.datetime "updated_at", null: false
     t.index ["site_id"], name: "index_namespaces_on_site_id"
     t.index ["slug"], name: "index_namespaces_on_slug", unique: true
+  end
+
+  create_table "post_blobs", force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.bigint "blob_id", null: false
+    t.bigint "index"
+    t.index ["blob_id"], name: "index_post_blobs_on_blob_id"
+    t.index ["post_id"], name: "index_post_blobs_on_post_id"
   end
 
   create_table "posts", force: :cascade do |t|

@@ -8,6 +8,7 @@ module Types
     field :title, String, null: false
     field :description, String
     field :thumbnail_url, String
+    field :blobs, Types::BlobType.connection_type, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
   end

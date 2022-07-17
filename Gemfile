@@ -12,6 +12,7 @@ gem "pg", "~> 1.1"
 
 # Web server
 gem "puma", "~> 5.6"
+gem "rack-cors", "~> 1.1"
 
 # Ruby extensions
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]

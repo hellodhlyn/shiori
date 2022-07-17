@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.1.1"
 
 # Rails
-gem "rails", "~> 7.0", ">= 7.0.2.3"
+gem "rails", "~> 7.0"
 gem "graphql", "~> 2.0"
 
 # Drivers

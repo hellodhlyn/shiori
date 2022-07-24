@@ -1,6 +1,6 @@
 module Types
   class BlobEnum < Types::Base::Enum
-    value "Markdown"
+    value "markdown"
   end
 
   class BlobType < Types::Base::Object
@@ -9,7 +9,7 @@ module Types
     field :content, String, null: false
 
     def type
-      @object.class.name.demodulize
+      @object.class.name.demodulize.downcase
     end
   end
 end

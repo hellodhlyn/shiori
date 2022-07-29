@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_19_152212) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_29_164726) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -41,6 +41,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_19_152212) do
     t.index ["post_id"], name: "index_post_blobs_on_post_id"
   end
 
+  create_table "post_tags", force: :cascade do |t|
+    t.bigint "post_id"
+    t.bigint "tag_id"
+    t.index ["post_id"], name: "index_post_tags_on_post_id"
+    t.index ["tag_id"], name: "index_post_tags_on_tag_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.bigint "namespace_id"
     t.string "uuid", null: false
@@ -63,6 +70,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_19_152212) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_sites_on_slug", unique: true
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.bigint "namespace_id"
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["namespace_id"], name: "index_tags_on_namespace_id"
   end
 
   create_table "users", force: :cascade do |t|

@@ -6,6 +6,7 @@ module Types
     field :uuid, String, null: false
     field :slug, String, null: false
     field :title, String, null: false
+    field :tags, [Types::TagType], null: false
     field :description, String
     field :thumbnail_url, String
     field :blobs, [Types::BlobType], null: false

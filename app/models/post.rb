@@ -16,7 +16,7 @@ class Post < ApplicationRecord
 
   validates :visibility, inclusion: { in: Visibilities::ALL }
 
-  default_scope { where(visibility: Visibilities::PUBLIC) }
+  default_scope { where(visibility: Visibilities::PUBLIC).order(id: :asc) }
 
   def blobs
     PostBlob.where(post: self).includes(:blob).order(index: :asc).map(&:blob)

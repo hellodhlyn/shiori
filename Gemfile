@@ -14,6 +14,9 @@ gem "pg", "~> 1.1"
 gem "puma", "~> 5.6"
 gem "rack-cors", "~> 1.1"
 
+# External services
+gem "faraday", "~> 2.2"
+
 # Ruby extensions
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 

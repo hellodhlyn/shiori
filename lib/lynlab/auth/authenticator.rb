@@ -7,12 +7,11 @@ module LYnLab
     end
 
     class << self
-      def authenticate(access_key)
+      def authenticate!(access_key)
         res = client.get("/whoami", nil, {
           "Authorization" => "Bearer #{access_key}",
         })
         raise Unauthorized.new("authentication failed (#{res.status})") unless res.success?
-
         JSON.parse(res.body)
       end
 

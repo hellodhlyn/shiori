@@ -14,6 +14,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_17_144547) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "authentications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "type", null: false
+    t.string "identifier", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_authentications_on_user_id"
+  end
+
   create_table "blobs", force: :cascade do |t|
     t.string "uuid", null: false
     t.string "type"
@@ -83,15 +92,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_17_144547) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "user_id", null: false
+    t.string "name", null: false
     t.string "display_name", null: false
-    t.string "email", null: false
+    t.string "email"
     t.string "profile_image_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uuid"
     t.index ["display_name"], name: "index_users_on_display_name", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["user_id"], name: "index_users_on_user_id", unique: true
+    t.index ["name"], name: "index_users_on_name", unique: true
   end
 
 end

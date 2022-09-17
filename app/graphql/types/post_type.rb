@@ -9,6 +9,7 @@ module Types
     field :tags, [Types::TagType], null: false
     field :description, String
     field :thumbnail_url, String
+    field :thumbnail_blurhash, String
     field :blobs, [Types::BlobType], null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_29_164726) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_17_144547) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,6 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_29_164726) do
     t.datetime "updated_at", null: false
     t.bigint "author_id"
     t.string "visibility", default: "", null: false
+    t.string "thumbnail_blurhash"
     t.index ["author_id"], name: "index_posts_on_author_id"
     t.index ["namespace_id"], name: "index_posts_on_namespace_id"
     t.index ["uuid"], name: "index_posts_on_uuid", unique: true

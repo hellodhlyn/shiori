@@ -9,8 +9,7 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
+      current_user: current_user,
     }
     result = ShioriSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -46,5 +45,17 @@ class GraphqlController < ApplicationController
     logger.error e.backtrace.join("\n")
 
     render json: { errors: [{ message: e.message, backtrace: e.backtrace }], data: {} }, status: 500
+  end
+
+  def current_user
+    auth_type, auth_key = request.headers["Authorization"]&.split(" ")
+    return nil unless auth_type == "Bearer"
+
+    user_id = begin
+                ApiToken.validate_key(auth_key, ApiToken::KeyTypes::ACCESS_KEY)
+              rescue ApiToken::Exceptions::BaseException => e
+                raise GraphQL::ExecutionError, e.message
+              end
+    User.find_by!(uuid: user_id)
   end
 end

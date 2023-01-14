@@ -11,6 +11,19 @@ class ApiToken
     REFRESH_KEY = "refresh_key"
   end
 
+  def self.generate(user)
+    ApiToken.new.tap do |token|
+      token.access_key  = generate_jwt(
+        { type: KeyTypes::ACCESS_KEY, user_id: user.uuid },
+        ACCESS_KEY_VALID_HOURS.days.from_now,
+      )
+      token.refresh_key = generate_jwt(
+        { type: KeyTypes::REFRESH_KEY, user_id: user.uuid },
+        REFRESH_KEY_VALID_HOURS.days.from_now,
+      )
+    end
+  end
+
   def self.validate_key(key, key_type)
     payload, _ = JWT.decode(key, secret, true, { algorithm: JWT_ALGORITHM })
     raise Exceptions::InvalidType.new unless payload["type"] == key_type
@@ -23,25 +36,14 @@ class ApiToken
     raise Exceptions::InvalidToken.new
   end
 
-  def initialize(user)
-    self.access_key  = generate_jwt(
-      { type: KeyTypes::ACCESS_KEY, user_id: user.uuid },
-      ACCESS_KEY_VALID_HOURS.days.from_now,
-    )
-    self.refresh_key = generate_jwt(
-      { type: KeyTypes::REFRESH_KEY, user_id: user.uuid },
-      REFRESH_KEY_VALID_HOURS.days.from_now,
-    )
-  end
-
   private
 
   def self.secret
     Rails.application.secrets.api_token_secret
   end
 
-  def generate_jwt(payload, valid_until)
-    JWT.encode(payload, self.class.secret, JWT_ALGORITHM, {
+  def self.generate_jwt(payload, valid_until)
+    JWT.encode(payload, secret, JWT_ALGORITHM, {
       iat: Time.zone.now.to_i,
       exp: valid_until.to_i,
     })

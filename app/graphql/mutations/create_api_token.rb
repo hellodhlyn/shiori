@@ -13,7 +13,7 @@ class Mutations::CreateApiToken < Mutations::Base::Mutation
     case provider
     when "lynlab"
       user = Authentications::Lynlab.get_or_create_user!(token)
-      ApiToken.new(user)
+      ApiToken.generate(user)
     else
       raise "invalid provider: #{provider}"
     end

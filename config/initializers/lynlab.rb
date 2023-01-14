@@ -1,0 +1,1 @@
+require 'lynlab/auth/authenticator'

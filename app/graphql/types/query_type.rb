@@ -16,7 +16,7 @@ module Types
     end
 
     field :user, Types::UserType do
-      argument :user_id, String, required: true
+      argument :name, String, required: true
     end
 
     def site(slug:)
@@ -31,8 +31,8 @@ module Types
       Post.find_by(namespace: namespace, slug: slug)
     end
 
-    def user(user_id:)
-      User.find_by(user_id: user_id)
+    def user(name:)
+      User.find_by(name: name)
     end
   end
 end

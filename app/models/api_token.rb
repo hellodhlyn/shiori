@@ -15,11 +15,11 @@ class ApiToken
     ApiToken.new.tap do |token|
       token.access_key  = generate_jwt(
         { type: KeyTypes::ACCESS_KEY, user_id: user.uuid },
-        ACCESS_KEY_VALID_HOURS.days.from_now,
+        ACCESS_KEY_VALID_HOURS.hours.from_now,
       )
       token.refresh_key = generate_jwt(
         { type: KeyTypes::REFRESH_KEY, user_id: user.uuid },
-        REFRESH_KEY_VALID_HOURS.days.from_now,
+        REFRESH_KEY_VALID_HOURS.hours.from_now,
       )
     end
   end
@@ -43,10 +43,8 @@ class ApiToken
   end
 
   def self.generate_jwt(payload, valid_until)
-    JWT.encode(payload, secret, JWT_ALGORITHM, {
-      iat: Time.zone.now.to_i,
-      exp: valid_until.to_i,
-    })
+    payload_with_claim = payload.merge({ iat: Time.zone.now.to_i, exp: valid_until.to_i })
+    JWT.encode(payload_with_claim, secret, JWT_ALGORITHM)
   end
 
   module Exceptions

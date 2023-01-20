@@ -1,0 +1,2 @@
+module Types::Enums
+end

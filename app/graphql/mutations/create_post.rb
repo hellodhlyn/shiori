@@ -12,7 +12,7 @@ class Mutations::CreatePost < Mutations::Base::Mutation
   def resolve(site:, namespace:, title:, slug:, description: nil, thumbnail_url: nil, blobs:)
     site      = Site.find_by!(slug: site)
     namespace = site.namespaces.find_by!(slug: namespace)
-    namespace.posts.create!(
+    post      = namespace.posts.create!(
       title:         title,
       slug:          slug,
       description:   description,
@@ -20,5 +20,7 @@ class Mutations::CreatePost < Mutations::Base::Mutation
       author:        context[:current_user],
       blobs:         blobs.map { |blob| Blob.create(type: blob.type, content: blob.content) },
     )
+
+    { post: post }
   end
 end

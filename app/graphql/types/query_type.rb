@@ -19,6 +19,9 @@ module Types
       argument :name, String, required: true
     end
 
+    field :viewer, Types::ViewerType do
+    end
+
     def site(slug:)
       Site.find_by(slug: slug)
     end
@@ -33,6 +36,10 @@ module Types
 
     def user(name:)
       User.find_by(name: name)
+    end
+
+    def viewer
+      context[:current_user] or raise GraphQL::ExecutionError.new("Unauthorized")
     end
   end
 end

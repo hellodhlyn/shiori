@@ -1,0 +1,2 @@
+module Types::Inputs
+end

@@ -27,11 +27,7 @@ RSpec.describe Mutations::CreatePost, type: :graphql do
     end
 
     subject do
-      execute_graphql(
-        mutation_string,
-        context: { current_user: user },
-        variables: { input: input },
-      )
+      execute_graphql(mutation_string, context: { current_user: user }, variables: { input: input })
     end
 
     it "should create a new post" do
@@ -42,6 +38,16 @@ RSpec.describe Mutations::CreatePost, type: :graphql do
     it "should create blobs with the correct indices" do
       expect(subject["error"]).to be_nil
       expect(subject["data"]["createPost"]["post"]["blobs"].map { |blob| blob["content"].to_i }).to eq [0, 1, 2]
+    end
+  end
+
+  context "unauthorized request" do
+    subject do
+      execute_graphql(mutation_string, context: { current_user: nil }, variables: { input: {} })
+    end
+
+    it "should return an error" do
+      expect(subject["errors"]).not_to be_nil
     end
   end
 end

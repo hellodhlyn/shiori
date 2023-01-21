@@ -10,6 +10,8 @@ class Mutations::CreatePost < Mutations::Base::Mutation
   field :post, Types::PostType, null: false
 
   def resolve(site:, namespace:, title:, slug:, description: nil, thumbnail_url: nil, blobs:)
+    raise GraphQL::ExecutionError.new("Unauthorized") unless context[:current_user].present?
+
     site      = Site.find_by!(slug: site)
     namespace = site.namespaces.find_by!(slug: namespace)
     post      = namespace.posts.create!(

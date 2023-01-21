@@ -3,7 +3,10 @@ RSpec.describe Mutations::CreatePost, type: :graphql do
     <<~GQL
       mutation($input: CreatePostInput!) {
         createPost(input: $input) {
-          post { uuid title }
+          post {
+            uuid
+            blobs { type content }
+          }
         }
       }
     GQL
@@ -19,23 +22,26 @@ RSpec.describe Mutations::CreatePost, type: :graphql do
         namespace: namespace.slug,
         title:     Faker::Lorem.sentence,
         slug:      Faker::Internet.domain_word,
-        blobs:     [
-          {
-            type:    "markdown",
-            content: Faker::Lorem.paragraph,
-          },
-        ],
+        blobs:     (0..2).map { |index| { type: "markdown", content: index.to_s } },
       }
     end
 
-    it "should create a new post" do
-      result = execute_graphql(
+    subject do
+      execute_graphql(
         mutation_string,
         context: { current_user: user },
         variables: { input: input },
       )
-      expect(result["error"]).to be_nil
-      expect(result["data"]["createPost"]["post"]).not_to be_nil
+    end
+
+    it "should create a new post" do
+      expect(subject["error"]).to be_nil
+      expect(subject["data"]["createPost"]["post"]).not_to be_nil
+    end
+
+    it "should create blobs with the correct indices" do
+      expect(subject["error"]).to be_nil
+      expect(subject["data"]["createPost"]["post"]["blobs"].map { |blob| blob["content"].to_i }).to eq [0, 1, 2]
     end
   end
 end

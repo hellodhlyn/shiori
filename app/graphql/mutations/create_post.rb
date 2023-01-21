@@ -5,11 +5,12 @@ class Mutations::CreatePost < Mutations::Base::Mutation
   argument :slug,          String, required: true
   argument :description,   String, required: false
   argument :thumbnail_url, String, required: false
+  argument :visibility,    Types::Enums::PostVisibility, required: false, default_value: Post::Visibilities::PRIVATE
   argument :blobs,         [Types::Inputs::BlobInput], required: true
 
   field :post, Types::PostType, null: false
 
-  def resolve(site:, namespace:, title:, slug:, description: nil, thumbnail_url: nil, blobs:)
+  def resolve(site:, namespace:, title:, slug:, description: nil, thumbnail_url: nil, visibility:, blobs:)
     raise GraphQL::ExecutionError.new("Unauthorized") unless context[:current_user].present?
 
     site      = Site.find_by!(slug: site)

@@ -4,7 +4,7 @@ RSpec.describe Mutations::CreatePost, type: :graphql do
       mutation($input: CreatePostInput!) {
         createPost(input: $input) {
           post {
-            uuid
+            uuid visibility
             blobs { type content }
           }
         }
@@ -38,6 +38,11 @@ RSpec.describe Mutations::CreatePost, type: :graphql do
     it "should create blobs with the correct indices" do
       expect(subject["error"]).to be_nil
       expect(subject["data"]["createPost"]["post"]["blobs"].map { |blob| blob["content"].to_i }).to eq [0, 1, 2]
+    end
+
+    it "default visibility should be private" do
+      expect(subject["error"]).to be_nil
+      expect(subject["data"]["createPost"]["post"]["visibility"]).to eq "private"
     end
   end
 

@@ -36,4 +36,14 @@ RSpec.describe Types::ViewerType, type: :graphql do
         .to include private_post.uuid
     end
   end
+
+  context "unauthorized request" do
+    subject do
+      execute_graphql(query_string, context: { current_user: nil })
+    end
+
+    it "should return an error" do
+      expect(subject["errors"]).not_to be_nil
+    end
+  end
 end

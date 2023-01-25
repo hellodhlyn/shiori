@@ -16,36 +16,22 @@ class ShioriSchema < GraphQL::Schema
 
   # Union and Interface Resolution
   def self.resolve_type(abstract_type, obj, ctx)
-    # TODO: Implement this method
-    # to return the correct GraphQL object type for `obj`
-    raise(GraphQL::RequiredImplementationMissingError)
+    case obj
+    when Post then Types::PostType
+    when Blob then Types::BlobType
+    else raise GraphQL::Schema::InvalidTypeError
+    end
   end
 
   # Relay-style Object Identification:
 
   # Return a string UUID for `object`
   def self.id_from_object(object, type_definition, query_ctx)
-    # For example, use Rails' GlobalID library (https://github.com/rails/globalid):
-    object_id = object.to_global_id.to_s
-    # Remove this redundant prefix to make IDs shorter:
-    object_id = object_id.sub("gid://#{GlobalID.app}/", "")
-    encoded_id = Base64.urlsafe_encode64(object_id)
-    # Remove the "=" padding
-    encoded_id = encoded_id.sub(/=+/, "")
-    # Add a type hint
-    type_hint = type_definition.graphql_name.first
-    "#{type_hint}_#{encoded_id}"
+    object.to_sgid
   end
 
   # Given a string UUID, find the object
-  def self.object_from_id(encoded_id_with_hint, query_ctx)
-    # For example, use Rails' GlobalID library (https://github.com/rails/globalid):
-    # Split off the type hint
-    _type_hint, encoded_id = encoded_id_with_hint.split("_", 2)
-    # Decode the ID
-    id = Base64.urlsafe_decode64(encoded_id)
-    # Rebuild it for Rails then find the object:
-    full_global_id = "gid://#{GlobalID.app}/#{id}"
-    GlobalID::Locator.locate(full_global_id)
+  def self.object_from_id(object_id, query_ctx)
+    GlobalID::Locator.locate_signed(object_id)
   end
 end

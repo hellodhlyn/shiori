@@ -1,9 +1,8 @@
 class Blob < ApplicationRecord
   include UuidGeneratable
+  include GlobalID::Identification
 
-  belongs_to :post, required: false
+  belongs_to :post, -> { with_private }, required: false
 
-  def visible?(user)
-    post.visible?(user)
-  end
+  delegate :visible?, to: :post
 end

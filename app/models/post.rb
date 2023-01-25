@@ -11,9 +11,8 @@ class Post < ApplicationRecord
   belongs_to :namespace
   belongs_to :author, class_name: "User"
   has_many :post_tags
-  has_many :post_blobs
   has_many :tags, through: :post_tags
-  has_many :blobs, -> { order(index: :asc) }, through: :post_blobs
+  has_many :blobs, -> { order(index: :asc) }
   delegate :site, :to => :namespace
 
   validates :visibility, inclusion: { in: Visibilities::ALL }

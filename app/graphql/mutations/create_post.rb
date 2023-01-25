@@ -22,9 +22,8 @@ class Mutations::CreatePost < Mutations::Base::Mutation
       thumbnail_url: thumbnail_url,
       author:        context[:current_user],
       visibility:    visibility,
-      post_blobs:    blobs.map { |blob| Blob.new(type: blob.type, content: blob.content) }
-                          .each_with_index
-                          .map { |blob, index| PostBlob.new(blob: blob, index: index) },
+      blobs:         blobs.each_with_index
+                          .map { |blob, index| Blob.new(type: blob.type, index: index, content: blob.content) }
     )
 
     { post: post }

@@ -1,5 +1,6 @@
 class Post < ApplicationRecord
   include UuidGeneratable
+  include GlobalID::Identification
 
   class Visibilities
     PUBLIC  = "public"
@@ -19,4 +20,8 @@ class Post < ApplicationRecord
 
   default_scope { where(visibility: Visibilities::PUBLIC).order(id: :asc) }
   scope :with_private, -> { unscope(where: :visibility) }
+
+  def visible?(user)
+    (visibility == Visibilities::PUBLIC) || (author == user)
+  end
 end

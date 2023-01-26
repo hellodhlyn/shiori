@@ -1,5 +1,11 @@
 module Types
   class PostType < Types::Base::Object
+    implements GraphQL::Types::Relay::Node
+
+    def self.authorized?(object, context)
+      super && object.visible?(context[:current_user])
+    end
+
     field :site, Types::SiteType, null: false
     field :namespace, Types::NamespaceType, null: false
     field :author, Types::UserType, null: false

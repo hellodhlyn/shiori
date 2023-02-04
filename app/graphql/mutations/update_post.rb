@@ -4,10 +4,11 @@ class Mutations::UpdatePost < Mutations::Base::Mutation
   argument :description,   String, required: false
   argument :thumbnail_url, String, required: false
   argument :visibility,    Types::Enums::PostVisibility, required: false
+  argument :tags,          [String], required: false
 
   field :post, Types::PostType, null: false
 
-  def resolve(id:, title: nil, description: nil, thumbnail_url: nil, visibility: nil)
+  def resolve(id:, title: nil, description: nil, thumbnail_url: nil, visibility: nil, tags: nil)
     raise GraphQL::ExecutionError.new("Unauthorized") unless current_user.present?
 
     post = GlobalID::Locator.locate_signed(id)
@@ -18,6 +19,7 @@ class Mutations::UpdatePost < Mutations::Base::Mutation
       description:   description,
       thumbnail_url: thumbnail_url,
       visibility:    visibility,
+      tags:          tags.present? ? Tag.where(namespace: post.namespace, slug: tags) : [],
     }.compact
     post.update!(attrs)
 

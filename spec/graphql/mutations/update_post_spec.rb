@@ -20,14 +20,21 @@ RSpec.describe Mutations::UpdatePost, type: :graphql do
     }
   }
   let(:post) { create :post, author: user, **post_attr }
+  let(:original_tags) { 3.times.map { create :tag, namespace: post.namespace } }
+
+  before do
+    post.update!(tags: original_tags)
+  end
 
   context "valid request" do
+    let(:tags) { original_tags.sample(1) + 2.times.map { create :tag, namespace: post.namespace } }
     let(:input) do
       {
         id:          post.to_sgid.to_s,
         title:       Faker::Lorem.sentence,
         description: Faker::Lorem.paragraph,
         visibility:  Post::Visibilities::PUBLIC,
+        tags:        tags.map(&:slug),
       }
     end
 
@@ -40,6 +47,8 @@ RSpec.describe Mutations::UpdatePost, type: :graphql do
         .to change { post.reload.title }.from(post_attr[:title]).to(input[:title])
        .and change { post.reload.description }.from(post_attr[:description]).to(input[:description])
        .and change { post.reload.visibility }.from(post_attr[:visibility]).to(input[:visibility])
+
+      expect(post.tags.map(&:slug)).to match_array input[:tags]
     end
   end
 

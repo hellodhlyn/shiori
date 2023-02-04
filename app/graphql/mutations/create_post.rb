@@ -7,10 +7,11 @@ class Mutations::CreatePost < Mutations::Base::Mutation
   argument :thumbnail_url, String, required: false
   argument :visibility,    Types::Enums::PostVisibility, required: false, default_value: Post::Visibilities::PRIVATE
   argument :blobs,         [Types::Inputs::BlobInput], required: true
+  argument :tags,          [String], required: false
 
   field :post, Types::PostType, null: false
 
-  def resolve(site:, namespace:, title:, slug:, description: nil, thumbnail_url: nil, visibility:, blobs:)
+  def resolve(site:, namespace:, title:, slug:, description: nil, thumbnail_url: nil, visibility:, blobs:, tags: nil)
     raise GraphQL::ExecutionError.new("Unauthorized") unless current_user.present?
 
     site      = Site.find_by!(slug: site)
@@ -23,7 +24,8 @@ class Mutations::CreatePost < Mutations::Base::Mutation
       author:        current_user,
       visibility:    visibility,
       blobs:         blobs.each_with_index
-                          .map { |blob, index| Blob.new(type: blob.type, index: index, content: blob.content) }
+                          .map { |blob, index| Blob.new(type: blob.type, index: index, content: blob.content) },
+      tags:          tags.present? ? Tag.where(namespace: namespace, slug: tags) : [],
     )
 
     { post: post }

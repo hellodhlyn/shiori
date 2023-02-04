@@ -4,5 +4,5 @@ class Blob < ApplicationRecord
 
   belongs_to :post, -> { with_private }, required: false
 
-  delegate :visible?, to: :post
+  delegate :author, :visible?, to: :post
 end

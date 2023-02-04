@@ -6,6 +6,7 @@ RSpec.describe Mutations::CreatePost, type: :graphql do
           post {
             uuid visibility
             blobs { type content }
+            tags { slug }
           }
         }
       }
@@ -14,6 +15,7 @@ RSpec.describe Mutations::CreatePost, type: :graphql do
 
   let(:user) { create :user }
   let(:namespace) { create :namespace }
+  let(:tags) { 3.times.map { create :tag, namespace: namespace } }
 
   context "valid request" do
     let(:input) do
@@ -23,6 +25,7 @@ RSpec.describe Mutations::CreatePost, type: :graphql do
         title:     Faker::Lorem.sentence,
         slug:      Faker::Internet.domain_word,
         blobs:     (0..2).map { |index| { type: "markdown", content: index.to_s } },
+        tags:      tags.map(&:slug),
       }
     end
 
@@ -31,17 +34,18 @@ RSpec.describe Mutations::CreatePost, type: :graphql do
     end
 
     it "should create a new post" do
-      expect(subject["error"]).to be_nil
+      expect(subject["errors"]).to be_nil
       expect(subject["data"]["createPost"]["post"]).not_to be_nil
+      expect(subject["data"]["createPost"]["post"]["tags"].length).to eq 3
     end
 
     it "should create blobs with the correct indices" do
-      expect(subject["error"]).to be_nil
+      expect(subject["errors"]).to be_nil
       expect(subject["data"]["createPost"]["post"]["blobs"].map { |blob| blob["content"].to_i }).to eq [0, 1, 2]
     end
 
     it "default visibility should be private" do
-      expect(subject["error"]).to be_nil
+      expect(subject["errors"]).to be_nil
       expect(subject["data"]["createPost"]["post"]["visibility"]).to eq "private"
     end
   end

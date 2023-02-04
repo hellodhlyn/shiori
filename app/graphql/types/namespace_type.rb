@@ -4,5 +4,6 @@ module Types
     field :slug, String, null: false
     field :site, Types::SiteType, null: false
     field :posts, Types::PostType.connection_type, null: false
+    field :tags, [Types::TagType], null: false
   end
 end

@@ -11,7 +11,7 @@ class Mutations::CreatePost < Mutations::Base::Mutation
   field :post, Types::PostType, null: false
 
   def resolve(site:, namespace:, title:, slug:, description: nil, thumbnail_url: nil, visibility:, blobs:)
-    raise GraphQL::ExecutionError.new("Unauthorized") unless context[:current_user].present?
+    raise GraphQL::ExecutionError.new("Unauthorized") unless current_user.present?
 
     site      = Site.find_by!(slug: site)
     namespace = site.namespaces.find_by!(slug: namespace)
@@ -20,7 +20,7 @@ class Mutations::CreatePost < Mutations::Base::Mutation
       slug:          slug,
       description:   description,
       thumbnail_url: thumbnail_url,
-      author:        context[:current_user],
+      author:        current_user,
       visibility:    visibility,
       blobs:         blobs.each_with_index
                           .map { |blob, index| Blob.new(type: blob.type, index: index, content: blob.content) }

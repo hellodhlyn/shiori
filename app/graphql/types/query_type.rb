@@ -19,7 +19,7 @@ module Types
       argument :name, String, required: true
     end
 
-    field :viewer, Types::ViewerType do
+    field :current_user, Types::ViewerType do
     end
 
     def site(slug:)

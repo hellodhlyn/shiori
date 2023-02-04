@@ -8,5 +8,6 @@ module Types
     field :create_post, mutation: Mutations::CreatePost
     field :update_post, mutation: Mutations::UpdatePost
     field :update_blob, mutation: Mutations::UpdateBlob
+    field :create_tag, mutation: Mutations::CreateTag
   end
 end

@@ -52,4 +52,17 @@ RSpec.describe Mutations::UpdatePost, type: :graphql do
       expect(subject["errors"]).not_to be_nil
     end
   end
+
+  context "request for another user's post" do
+    let(:other_user) { create :user }
+    let(:post) { create :post, author: other_user, **post_attr }
+
+    subject do
+      execute_graphql(mutation_string, context: { current_user: user }, variables: { input: {} })
+    end
+
+    it "should return an error" do
+      expect(subject["errors"]).not_to be_nil
+    end
+  end
 end

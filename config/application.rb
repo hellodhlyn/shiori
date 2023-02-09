@@ -13,5 +13,7 @@ module Shiori
   class Application < Rails::Application
     config.load_defaults 7.0
     config.api_only = true
+
+    config.cache_store = :redis_cache_store, { url: ENV["REDIS_URL"] }
   end
 end

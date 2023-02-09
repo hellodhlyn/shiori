@@ -18,6 +18,7 @@ gem "rack-cors", "~> 1.1"
 
 # Security, Authentications
 gem "jwt"
+gem "webauthn"
 
 # External services
 gem "faraday", "~> 2.2"

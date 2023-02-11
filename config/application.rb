@@ -14,6 +14,6 @@ module Shiori
     config.load_defaults 7.0
     config.api_only = true
 
-    config.cache_store = :redis_cache_store, { url: ENV["REDIS_URL"] }
+    config.cache_store = :redis_cache_store, { url: ENV["REDIS_URL"], password: ENV["REDIS_PASSWORD"] }
   end
 end

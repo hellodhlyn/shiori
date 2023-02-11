@@ -9,13 +9,16 @@ gem "graphql", "~> 2.0"
 
 # Drivers
 gem "pg", "~> 1.1"
+gem "redis"
+gem "hiredis"
 
 # Web server
 gem "puma", "~> 5.6"
 gem "rack-cors", "~> 1.1"
 
 # Security, Authentications
-gem 'jwt'
+gem "jwt"
+gem "webauthn"
 
 # External services
 gem "faraday", "~> 2.2"

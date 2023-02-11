@@ -1,4 +1,4 @@
-class Mutations::ChallengeWebAuthnCreation < Mutations::Base::Mutation
+class Mutations::ChallengeWebAuthnRegister < Mutations::Base::Mutation
   argument :username,     String, required: false
   argument :display_name, String, required: false
   argument :email,        String, required: false
@@ -12,7 +12,7 @@ class Mutations::ChallengeWebAuthnCreation < Mutations::Base::Mutation
 
     ActiveRecord::Base.transaction do
       user = current_user || User.create!(name: username, display_name: display_name, email: email)
-      Authentications::WebAuthn.challenge_creation(user)
+      Authentications::WebAuthn.challenge_register(user)
     end => options
 
     { options: options.to_json }

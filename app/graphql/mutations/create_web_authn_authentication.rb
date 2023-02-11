@@ -11,7 +11,7 @@ class Mutations::CreateWebAuthnAuthentication < Mutations::Base::Mutation
 
     user = current_user || User.find_by!(name: username)
     begin
-      Authentications::WebAuthn.verify_creation!(user, JSON.parse(credential))
+      Authentications::WebAuthn.verify_register!(user, JSON.parse(credential))
     rescue WebAuthn::Error => e
       Rails.logger.warn(e)
       raise GraphQL::ExecutionError.new("Invalid credential")

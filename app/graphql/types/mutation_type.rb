@@ -4,7 +4,7 @@ module Types
     field :create_api_token, mutation: Mutations::CreateApiToken
     field :refresh_api_token, mutation: Mutations::RefreshApiToken
 
-    field :challenge_web_authn_creation, mutation: Mutations::ChallengeWebAuthnCreation
+    field :challenge_web_authn_register, mutation: Mutations::ChallengeWebAuthnRegister
     field :create_web_authn_authentication, mutation: Mutations::CreateWebAuthnAuthentication
 
     # Posts

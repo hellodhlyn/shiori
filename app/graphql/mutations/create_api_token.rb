@@ -1,21 +1,22 @@
 class Mutations::CreateApiToken < Mutations::Base::Mutation
-  class ProviderEnum < Types::Base::Enum
-    value "lynlab"
+  class WebAuthnType < Types::Base::InputObject
+    argument :username,   String, required: true
+    argument :credential, String, required: true
   end
 
-  argument :provider, ProviderEnum
-  argument :token,    String
+  argument :web_authn, WebAuthnType
 
   field :access_key,  String, null: false
   field :refresh_key, String, null: false
 
-  def resolve(provider:, token:)
-    case provider
-    when "lynlab"
-      user = Authentications::Lynlab.get_or_create_user!(token)
-      ApiToken.generate(user)
+  def resolve(web_authn:)
+    if web_authn.present?
+      user = User.find_by!(name: web_authn.username)
+      Authentications::WebAuthn.verify_authentication!(user, JSON.parse(web_authn.credential))
     else
-      raise "invalid provider: #{provider}"
-    end
+      raise GraphQL::ExecutionError.new("No authentication provided")
+    end => user
+
+    ApiToken.generate(user)
   end
 end

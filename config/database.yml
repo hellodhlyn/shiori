@@ -21,7 +21,7 @@ test:
 
 production:
   <<: *default
-  database: shiori_production
+  database: <%= ENV["SHIORI_DATABASE_NAME"] %>
   username: <%= ENV["SHIORI_DATABASE_USERNAME"] %>
   password: <%= ENV["SHIORI_DATABASE_PASSWORD"] %>
   host: <%= ENV["SHIORI_DATABASE_HOST"] %>

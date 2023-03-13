@@ -13,5 +13,9 @@ module Types
     def type
       @object.class.name.demodulize.downcase
     end
+
+    def content
+      @object.text
+    end
   end
 end

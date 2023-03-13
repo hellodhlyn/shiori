@@ -24,7 +24,7 @@ RSpec.describe Mutations::CreatePost, type: :graphql do
         namespace: namespace.slug,
         title:     Faker::Lorem.sentence,
         slug:      Faker::Internet.domain_word,
-        blobs:     (0..2).map { |index| { type: "markdown", content: index.to_s } },
+        blobs:     (0..2).map { |index| { type: "markdown", markdown: { text: index.to_s } } },
         tags:      tags.map(&:slug),
       }
     end

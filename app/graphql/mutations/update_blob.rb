@@ -2,7 +2,7 @@ class Mutations::UpdateBlob < Mutations::Base::Mutation
   argument :id, ID, required: true
   argument :blob, Types::Inputs::BlobInput, required: true
 
-  field :blob, Types::BlobType, null: false
+  field :blob, Types::Interfaces::Blob, null: false
 
   def resolve(id:, blob:)
     raise GraphQL::ExecutionError.new("Unauthorized") unless current_user.present?

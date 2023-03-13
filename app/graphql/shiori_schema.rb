@@ -18,7 +18,7 @@ class ShioriSchema < GraphQL::Schema
   def self.resolve_type(abstract_type, obj, ctx)
     case obj
     when Post then Types::PostType
-    when Blob then Types::BlobType
+    when Blob then Types::Interfaces::Blob
     else raise GraphQL::Schema::InvalidTypeError
     end
   end

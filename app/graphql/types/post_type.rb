@@ -16,7 +16,7 @@ module Types
     field :description, String
     field :thumbnail_url, String
     field :thumbnail_blurhash, String
-    field :blobs, [Types::BlobType], null: false
+    field :blobs, [Types::Interfaces::Blob], null: false
     field :visibility, Types::Enums::PostVisibility, null: false
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
     field :updated_at, GraphQL::Types::ISO8601DateTime, null: false

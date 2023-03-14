@@ -16,6 +16,10 @@ gem "hiredis"
 gem "puma", "~> 5.6"
 gem "rack-cors", "~> 1.1"
 
+# Utilities
+gem "github-markup"
+gem "commonmarker"
+
 # Security, Authentications
 gem "jwt"
 gem "webauthn"

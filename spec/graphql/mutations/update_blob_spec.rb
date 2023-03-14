@@ -18,7 +18,7 @@ RSpec.describe Mutations::UpdateBlob, type: :graphql do
       text: Faker::Lorem.paragraph,
     }
   }
-  let(:blob) { create :blob, post: post, content: content }
+  let(:blob) { create :plaintext_blob, post: post, content: content }
 
   context "valid request" do
     let(:input) do
@@ -55,7 +55,7 @@ RSpec.describe Mutations::UpdateBlob, type: :graphql do
 
   context "request for another user's blob" do
     let(:other_user) { create :user }
-    let(:blob) { create :blob, author: other_user, **blob_attr }
+    let(:blob) { create :plaintext_blob, author: other_user, **blob_attr }
 
     subject do
       execute_graphql(mutation_string, context: { current_user: user }, variables: { input: {} })

@@ -1,6 +1,16 @@
 FactoryBot.define do
-  factory :blob, class: "Blobs::Markdown" do
+  factory :blob do
     post { create :post }
-    content { { "text" => Faker::Lorem.paragraph } }
+
+    trait :markdown do
+      content { { "text" => Faker::Lorem.paragraph } }
+    end
+
+    trait :plaintext do
+      content { { "text" => Faker::Lorem.paragraph } }
+    end
+
+    factory :markdown_blob,  class: "Blobs::Markdown",  traits: [:markdown]
+    factory :plaintext_blob, class: "Blobs::Plaintext", traits: [:plaintext]
   end
 end

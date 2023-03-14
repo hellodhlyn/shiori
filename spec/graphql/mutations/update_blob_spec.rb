@@ -13,18 +13,23 @@ RSpec.describe Mutations::UpdateBlob, type: :graphql do
 
   let(:user) { create :user }
   let(:post) { create :post, author: user }
-  let(:blob_attr) {
+  let(:content) {
     {
-      content: Faker::Lorem.paragraph,
+      text: Faker::Lorem.paragraph,
     }
   }
-  let(:blob) { create :blob, post: post, **blob_attr }
+  let(:blob) { create :blob, post: post, content: content }
 
   context "valid request" do
     let(:input) do
       {
         id:      blob.to_sgid.to_s,
-        content: Faker::Lorem.paragraph,
+        blob: {
+          type: "markdown",
+          markdown: {
+            text: Faker::Lorem.paragraph,
+          },
+        },
       }
     end
 
@@ -34,7 +39,7 @@ RSpec.describe Mutations::UpdateBlob, type: :graphql do
 
     it "should update the blob" do
       expect { subject }
-        .to change { blob.reload.content }.from(blob_attr[:content]).to(input[:content])
+        .to change { blob.reload.text }.from(content[:text]).to(input[:blob][:markdown][:text])
     end
   end
 

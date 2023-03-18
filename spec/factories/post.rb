@@ -6,5 +6,6 @@ FactoryBot.define do
     description { Faker::Lorem.paragraph }
     author { create :user }
     visibility { Post::Visibilities::PUBLIC }
+    tags { [] }
   end
 end

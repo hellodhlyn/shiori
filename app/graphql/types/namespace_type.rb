@@ -7,7 +7,7 @@ class Types::NamespaceType < Types::Base::Object
   end
   field :tags, [Types::TagType], null: false
 
-  def posts(filter:)
+  def posts(filter: nil)
     posts = object.posts
     posts = filter.apply(posts) if filter.present?
     posts

@@ -13,5 +13,6 @@ module Types
     field :update_post, mutation: Mutations::UpdatePost
     field :update_blob, mutation: Mutations::UpdateBlob
     field :create_tag, mutation: Mutations::CreateTag
+    field :update_user, mutation: Mutations::UpdateUser
   end
 end

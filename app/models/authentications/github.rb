@@ -11,7 +11,7 @@ class Authentications::Github < Authentication
     self.find_or_create_by!(identifier: user_info["id"]) do |auth|
       auth.user = User.create!(
         name:              user_info["login"],
-        display_name:      user_info["name"],
+        display_name:      user_info["name"] || user_info["login"],
         email:             user_info["email"],
         profile_image_url: user_info["avatar_url"],
       )

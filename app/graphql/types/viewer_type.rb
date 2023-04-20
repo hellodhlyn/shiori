@@ -1,8 +1,10 @@
 class Types::ViewerType < Types::Base::Object
   field :name,              String, null: false
   field :display_name,      String, null: false
-  field :email,             String, null: false
+  field :email,             String
   field :profile_image_url, String
+  field :description,       String
+  field :website_url,       String
 
   field :post, Types::PostType do
     argument :site, String, required: false

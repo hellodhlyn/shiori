@@ -19,7 +19,7 @@ class Post < ApplicationRecord
 
   validates :visibility, inclusion: { in: Visibilities::ALL }
 
-  default_scope { where(visibility: Visibilities::PUBLIC).order(id: :asc) }
+  default_scope { where(visibility: Visibilities::PUBLIC) }
   scope :with_private, -> { unscope(where: :visibility) }
 
   def visible?(user)

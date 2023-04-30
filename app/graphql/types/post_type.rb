@@ -22,6 +22,6 @@ class Types:: PostType < Types::Base::Object
   field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 
   def reaction_summary
-    ReactionSummary.new(object.reactions)
+    ReactionSummary.new(object.reactions, viewer: current_user)
   end
 end

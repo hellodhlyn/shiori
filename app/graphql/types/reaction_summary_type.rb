@@ -7,5 +7,6 @@ module Types
   class ReactionSummaryType < Types::Base::Object
     field :total_count,      Integer,                    null: false
     field :count_by_content, [Types::ReactionCountType], null: false
+    field :viewer_reactions, [Types::ReactionType],      null: false
   end
 end

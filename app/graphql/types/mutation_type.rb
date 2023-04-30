@@ -14,5 +14,9 @@ module Types
     field :update_blob, mutation: Mutations::UpdateBlob
     field :create_tag, mutation: Mutations::CreateTag
     field :update_user, mutation: Mutations::UpdateUser
+
+    # Reactions
+    field :add_reaction, mutation: Mutations::AddReaction
+    field :remove_reaction, mutation: Mutations::RemoveReaction
   end
 end

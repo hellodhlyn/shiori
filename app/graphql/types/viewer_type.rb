@@ -5,6 +5,7 @@ class Types::ViewerType < Types::Base::Object
   field :profile_image_url, String
   field :description,       String
   field :website_url,       String
+  field :reactions,         Types::ReactionType.connection_type
 
   field :post, Types::PostType do
     argument :site, String, required: false

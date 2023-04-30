@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_18_063249) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_18_133050) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,6 +68,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_18_063249) do
     t.index ["author_id"], name: "index_posts_on_author_id"
     t.index ["namespace_id"], name: "index_posts_on_namespace_id"
     t.index ["uuid"], name: "index_posts_on_uuid", unique: true
+  end
+
+  create_table "reactions", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "post_id"
+    t.string "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_reactions_on_post_id"
+    t.index ["user_id"], name: "index_reactions_on_user_id"
   end
 
   create_table "sites", force: :cascade do |t|

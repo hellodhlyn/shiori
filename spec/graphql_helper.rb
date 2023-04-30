@@ -9,7 +9,7 @@ module GraphQLHelpers
     ShioriSchema.execute(
       query,
       variables: opts[:variables],
-      context:   { controller: controller }.merge(opts[:context]),
+      context:   { controller: controller }.merge(opts[:context] || {}),
     )
   end
 end

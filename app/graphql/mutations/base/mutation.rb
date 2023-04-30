@@ -10,5 +10,9 @@ module Mutations
     def current_user
       context[:current_user]
     end
+
+    def validate_authorized!
+      raise GraphQL::ExecutionError.new("Unauthorized") unless current_user.present?
+    end
   end
 end

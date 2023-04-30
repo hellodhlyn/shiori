@@ -11,6 +11,9 @@ RSpec.describe Types::ViewerType, type: :graphql do
               }
             }
           }
+          reactions {
+            nodes { content }
+          }
         }
       }
     GQL
@@ -34,6 +37,12 @@ RSpec.describe Types::ViewerType, type: :graphql do
       expect(subject["errors"]).to be_nil
       expect(subject["data"]["viewer"]["posts"]["edges"].map { |edge| edge["node"]["uuid"] })
         .to include private_post.uuid
+    end
+
+    it "should return the current user's reactions" do
+      create_list(:reaction, 3, user: user)
+      expect(subject["errors"]).to be_nil
+      expect(subject["data"]["viewer"]["reactions"]["nodes"].length).to eq 3
     end
   end
 

@@ -130,6 +130,7 @@ GEM
       timeout
     net-smtp (0.3.3)
       net-protocol
+    newrelic_rpm (9.2.2)
     nio4r (2.5.8)
     nokogiri (1.14.3-arm64-darwin)
       racc (~> 1.4)
@@ -238,6 +239,7 @@ DEPENDENCIES
   graphql (~> 2.0)
   hiredis
   jwt
+  newrelic_rpm
   pg (~> 1.1)
   puma (~> 5.6)
   rack-cors (~> 1.1)

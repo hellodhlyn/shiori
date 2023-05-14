@@ -1,4 +1,6 @@
 class ShioriSchema < GraphQL::Schema
+  use(GraphQL::Tracing::NewRelicTracing, set_transaction_name: true)
+
   mutation(Types::MutationType)
   query(Types::QueryType)
 

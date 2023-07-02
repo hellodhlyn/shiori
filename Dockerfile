@@ -12,5 +12,7 @@ RUN bundle install
 COPY . .
 
 ENV LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2
+ENV RUBY_YJIT_ENABLE=1
+
 EXPOSE 3000
 CMD ["bundle", "exec", "rails", "s"]

@@ -3,6 +3,8 @@ module Types
     include GraphQL::Types::Relay::HasNodeField
     include GraphQL::Types::Relay::HasNodesField
 
+    field :sites, [Types::SiteType]
+
     field :site, Types::SiteType do
       argument :slug, String, required: true
     end
@@ -19,7 +21,10 @@ module Types
       argument :name, String, required: true
     end
 
-    field :viewer, Types::ViewerType do
+    field :viewer, Types::ViewerType, null: false
+
+    def sites
+      Site.all
     end
 
     def site(slug:)

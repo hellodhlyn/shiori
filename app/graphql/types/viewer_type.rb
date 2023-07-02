@@ -15,7 +15,9 @@ class Types::ViewerType < Types::Base::Object
     validates required: { one_of: [[:site, :namespace, :slug], :uuid] }
   end
 
-  field :posts, Types::PostType.connection_type
+  field :posts, Types::PostType.connection_type, null: false do
+    argument :filter, Types::Inputs::PostFilter, required: false
+  end
 
   def post(site: nil, namespace: nil, slug: nil, uuid: nil)
     return Post.with_private.find_by(uuid: uuid, author: viewer) if uuid.present?
@@ -25,8 +27,10 @@ class Types::ViewerType < Types::Base::Object
     Post.with_private.find_by(namespace: namespace, slug: slug, author: viewer)
   end
 
-  def posts
-    viewer.posts.with_private
+  def posts(filter: nil)
+    posts = viewer.posts.with_private
+    posts = filter.apply(posts) if filter.present?
+    posts
   end
 
   private

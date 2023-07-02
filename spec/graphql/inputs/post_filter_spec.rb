@@ -5,6 +5,7 @@ RSpec.describe Types::Inputs::PostFilter, type: :graphql do
     [
       create(:post, namespace: namespace, tags: [tags[0], tags[1]]),
       create(:post, namespace: namespace, tags: [tags[1], tags[2]]),
+      create(:post),
     ]
   end
 
@@ -16,6 +17,14 @@ RSpec.describe Types::Inputs::PostFilter, type: :graphql do
 
       it "should return the posts with the given tags" do
         expect(subject).to match_array [posts[0], posts[1]]
+      end
+    end
+
+    context "namespace" do
+      let(:args) { { site: namespace.site.slug, namespace: namespace.slug } }
+
+      it "should return the posts with the given namespace" do
+        expect(subject).to match_array posts.select { |p| p.namespace == namespace }
       end
     end
   end

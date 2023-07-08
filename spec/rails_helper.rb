@@ -31,6 +31,8 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 require "faker"
+require "simplecov"
+require "simplecov-lcov"
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -65,4 +67,14 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include FactoryBot::Syntax::Methods
+end
+
+SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
+SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::LcovFormatter,
+])
+
+SimpleCov.start do
+  add_filter "/spec/"
 end

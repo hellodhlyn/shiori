@@ -2,9 +2,9 @@ RSpec.describe Types::Inputs::StringFieldFilter, type: :graphql do
   let(:namespace) { create :namespace }
   let(:posts) do
     [
-      create(:post, namespace: namespace, title: Faker::Lorem.sentence),
-      create(:post, namespace: namespace, title: Faker::Lorem.sentence),
-      create(:post, namespace: namespace, title: Faker::Lorem.sentence),
+      create(:post, namespace: namespace, title: Faker::Lorem.sentence(random_words_to_add: 4)),
+      create(:post, namespace: namespace, title: Faker::Lorem.sentence(random_words_to_add: 4)),
+      create(:post, namespace: namespace, title: Faker::Lorem.sentence(random_words_to_add: 4)),
     ]
   end
 

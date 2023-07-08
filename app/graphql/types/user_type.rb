@@ -6,7 +6,6 @@ module Types
     field :profile_image_url, String
     field :description,       String
     field :website_url,       String
-
-    field :posts, Types::PostType.connection_type
+    field :posts, resolver: Resolvers::PostsResolver
   end
 end

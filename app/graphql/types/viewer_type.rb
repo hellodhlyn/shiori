@@ -7,35 +7,6 @@ class Types::ViewerType < Types::Base::Object
   field :website_url,       String
   field :reactions,         Types::ReactionType.connection_type
 
-  field :post, Types::PostType do
-    argument :site, String, required: false
-    argument :namespace, String, required: false
-    argument :slug, String, required: false
-    argument :uuid, String, required: false
-    validates required: { one_of: [[:site, :namespace, :slug], :uuid] }
-  end
-
-  field :posts, Types::PostType.connection_type, null: false do
-    argument :filter, Types::Inputs::PostFilter, required: false
-  end
-
-  def post(site: nil, namespace: nil, slug: nil, uuid: nil)
-    return Post.with_private.find_by(uuid: uuid, author: viewer) if uuid.present?
-
-    site      = Site.find_by(slug: site) or return nil
-    namespace = Namespace.find_by(site: site, slug: namespace) or return nil
-    Post.with_private.find_by(namespace: namespace, slug: slug, author: viewer)
-  end
-
-  def posts(filter: nil)
-    posts = viewer.posts.with_private
-    posts = filter.apply(posts) if filter.present?
-    posts
-  end
-
-  private
-
-  def viewer
-    context[:current_user]
-  end
+  field :post, resolver: Resolvers::PostResolver
+  field :posts, resolver: Resolvers::PostsResolver
 end

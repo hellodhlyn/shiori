@@ -1,6 +1,8 @@
 name: Run tests
 
-on: push
+on:
+  - push
+  - pull_request
 
 jobs:
   test:
@@ -35,3 +37,8 @@ jobs:
         run: |
           bundle exec rails db:migrate
           bundle exec rspec
+      - name: Report coverage
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: romeovs/lcov-reporter-action@v0.3.1
+        with:
+          lcov-file: ./coverage/lcov/shiori.lcov

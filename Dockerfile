@@ -7,6 +7,7 @@ RUN gem install bundler -v 2.4.12
 
 COPY Gemfile* .
 RUN bundle config set --local deployment true
+RUN bundle config set --local without "development test"
 RUN bundle install
 
 COPY . .

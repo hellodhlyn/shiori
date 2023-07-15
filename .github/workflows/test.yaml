@@ -35,6 +35,7 @@ jobs:
           bundler-cache: true
       - name: Run tests
         run: |
+          bundle exec rails zeitwerk:check
           bundle exec rails db:migrate
           bundle exec rspec
       - name: Report coverage

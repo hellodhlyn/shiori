@@ -3,7 +3,7 @@ module Types::Interfaces::Blob
 
   implements GraphQL::Types::Relay::Node
 
-  orphan_types Types::MarkdownBlobType, Types::PlaintextBlobType
+  orphan_types *Types::BlobTypes.constants.map { Types::BlobTypes::const_get(_1) }.select { _1.is_a?(Class) }
 
   field :uuid, String, null: false
   field :type, Types::Enums::BlobTypeEnum, null: false
@@ -24,8 +24,9 @@ module Types::Interfaces::Blob
 
     def resolve_type(object, context)
       case object
-      when Blobs::Markdown  then Types::MarkdownBlobType
-      when Blobs::Plaintext then Types::PlaintextBlobType
+      when Blobs::Markdown  then Types::BlobTypes::Markdown
+      when Blobs::Plaintext then Types::BlobTypes::Plaintext
+      when Blobs::Image     then Types::BlobTypes::Image
       else raise "Unexpected blob type"
       end
     end

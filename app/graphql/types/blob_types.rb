@@ -1,16 +1,16 @@
 module Types::BlobTypes
-  class Markdown < Types::Base::Object
+  class MarkdownBlob < Types::Base::Object
     implements Types::Interfaces::Blob
     field :text,      String, null: false
     field :text_html, String, null: false
   end
 
-  class Plaintext < Types::Base::Object
+  class PlaintextBlob < Types::Base::Object
     implements Types::Interfaces::Blob
     field :text, String, null: false 
   end
 
-  class Image < Types::Base::Object
+  class ImageBlob < Types::Base::Object
     implements Types::Interfaces::Blob
     field :url,         String, null: false
     field :preview_url, String, null: true

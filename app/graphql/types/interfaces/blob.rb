@@ -24,9 +24,9 @@ module Types::Interfaces::Blob
 
     def resolve_type(object, context)
       case object
-      when Blobs::Markdown  then Types::BlobTypes::Markdown
-      when Blobs::Plaintext then Types::BlobTypes::Plaintext
-      when Blobs::Image     then Types::BlobTypes::Image
+      when Blobs::Markdown  then Types::BlobTypes::MarkdownBlob
+      when Blobs::Plaintext then Types::BlobTypes::PlaintextBlob
+      when Blobs::Image     then Types::BlobTypes::ImageBlob
       else raise "Unexpected blob type"
       end
     end

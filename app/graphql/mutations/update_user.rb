@@ -1,4 +1,4 @@
-class Mutations::UpdateUser < Mutations::Base::Mutation
+class Mutations::UpdateUser < Mutations::BaseMutation
   argument :display_name,      String, required: false
   argument :profile_image_url, String, required: false
   argument :description,       String, required: false

@@ -1,4 +1,4 @@
-class Mutations::CreateApiToken < Mutations::Base::Mutation
+class Mutations::CreateApiToken < Mutations::BaseMutation
   class WebAuthnAuthenticationType < Types::Base::InputObject
     argument :username,   String
     argument :credential, String

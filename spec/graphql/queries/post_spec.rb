@@ -1,4 +1,4 @@
-RSpec.describe Resolvers::PostResolver do
+RSpec.describe Queries::PostQuery do
   subject { described_class.new(object: nil, context: context, field: nil) }
 
   let(:post) { create :post }

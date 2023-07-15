@@ -1,4 +1,4 @@
-class Mutations::UpdateBlob < Mutations::Base::Mutation
+class Mutations::UpdateBlob < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :blob, Types::Inputs::BlobInput, required: true
 

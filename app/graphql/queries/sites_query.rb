@@ -1,5 +1,5 @@
-module Resolvers
-  class SitesResolver < Resolvers::Base
+module Queries
+  class SitesQuery < Queries::BaseQuery
     type [Types::SiteType], null: false
 
     def resolve = Site.all

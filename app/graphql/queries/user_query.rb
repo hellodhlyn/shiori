@@ -1,5 +1,5 @@
-module Resolvers
-  class UserResolver < Resolvers::Base
+module Queries
+  class UserQuery < Queries::BaseQuery
     type Types::UserType, null: true
 
     argument :name, String, required: true

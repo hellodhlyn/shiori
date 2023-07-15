@@ -1,5 +1,5 @@
 module Resolvers
-  class Base < GraphQL::Schema::Resolver
+  class BaseResolver < GraphQL::Schema::Resolver
     argument_class Types::Base::Argument
 
     protected

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Resolvers::UserResolver do
+RSpec.describe Queries::UserQuery do
   subject { described_class.new(object: nil, context: nil, field: nil) }
 
   let(:user) { create :user }

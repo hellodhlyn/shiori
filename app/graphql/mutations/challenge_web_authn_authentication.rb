@@ -1,4 +1,4 @@
-class Mutations::ChallengeWebAuthnAuthentication < Mutations::Base::Mutation
+class Mutations::ChallengeWebAuthnAuthentication < Mutations::BaseMutation
   argument :username, String, required: true
 
   field :options, String, null: false

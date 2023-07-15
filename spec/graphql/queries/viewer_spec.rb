@@ -1,4 +1,4 @@
-RSpec.describe Resolvers::ViewerResolver do
+RSpec.describe Queries::ViewerQuery do
   subject { described_class.new(object: nil, context: context, field: nil) }
 
   let(:viewer) { create :user }

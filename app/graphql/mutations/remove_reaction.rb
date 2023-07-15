@@ -1,4 +1,4 @@
-class Mutations::RemoveReaction < Mutations::Base::Mutation
+class Mutations::RemoveReaction < Mutations::BaseMutation
   argument :post_id, ID,     required: true
   argument :content, String, required: true
 

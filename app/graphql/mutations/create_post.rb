@@ -1,4 +1,4 @@
-class Mutations::CreatePost < Mutations::Base::Mutation
+class Mutations::CreatePost < Mutations::BaseMutation
   argument :site,          String, required: true
   argument :namespace,     String, required: true
   argument :title,         String, required: true

@@ -1,4 +1,4 @@
-class Mutations::CreateTag < Mutations::Base::Mutation
+class Mutations::CreateTag < Mutations::BaseMutation
   argument :site,      String, required: true
   argument :namespace, String, required: true
   argument :slug,      String, required: true

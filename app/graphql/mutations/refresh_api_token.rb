@@ -1,4 +1,4 @@
-class Mutations::RefreshApiToken < Mutations::Base::Mutation
+class Mutations::RefreshApiToken < Mutations::BaseMutation
   argument :refresh_key, String
 
   field :access_key,  String, null: false

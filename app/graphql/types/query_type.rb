@@ -3,10 +3,10 @@ module Types
     include GraphQL::Types::Relay::HasNodeField
     include GraphQL::Types::Relay::HasNodesField
 
-    field :post, resolver: Resolvers::PostResolver
-    field :site, resolver: Resolvers::SiteResolver
-    field :sites, resolver: Resolvers::SitesResolver
-    field :user, resolver: Resolvers::UserResolver
-    field :viewer, resolver: Resolvers::ViewerResolver
+    field :post, resolver: Queries::PostQuery
+    field :site, resolver: Queries::SiteQuery
+    field :sites, resolver: Queries::SitesQuery
+    field :user, resolver: Queries::UserQuery
+    field :viewer, resolver: Queries::ViewerQuery
   end
 end

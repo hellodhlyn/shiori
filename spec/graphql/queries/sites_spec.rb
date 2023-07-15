@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Resolvers::SitesResolver do
+RSpec.describe Queries::SitesQuery do
   subject { described_class.new(object: nil, context: nil, field: nil) }
 
   before { create_list :site, 3 }

@@ -1,4 +1,4 @@
-class Mutations::CreateWebAuthnAuthentication < Mutations::Base::Mutation
+class Mutations::CreateWebAuthnAuthentication < Mutations::BaseMutation
   argument :username,   String, required: false
   argument :credential, String, required: true
 

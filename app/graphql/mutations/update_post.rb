@@ -1,4 +1,4 @@
-class Mutations::UpdatePost < Mutations::Base::Mutation
+class Mutations::UpdatePost < Mutations::BaseMutation
   argument :id,            ID,     required: true
   argument :title,         String, required: false
   argument :description,   String, required: false

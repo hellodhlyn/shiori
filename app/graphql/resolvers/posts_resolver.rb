@@ -1,5 +1,5 @@
 module Resolvers
-  class PostsResolver < Resolvers::Base
+  class PostsResolver < Resolvers::BaseResolver
     type Types::PostType.connection_type, null: false
 
     argument :filter, Types::Inputs::PostFilter, required: false

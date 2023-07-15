@@ -1,4 +1,4 @@
-class Mutations::ChallengeWebAuthnRegister < Mutations::Base::Mutation
+class Mutations::ChallengeWebAuthnRegister < Mutations::BaseMutation
   argument :username,     String, required: false
   argument :display_name, String, required: false
   argument :email,        String, required: false

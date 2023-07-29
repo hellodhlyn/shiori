@@ -19,7 +19,7 @@ module Queries
     private
 
     def post_clazz
-      current_user.present? ? Post.with_private : Post
+      current_user.present? ? Post.with_invisible : Post.with_unlisted
     end
   end
 end

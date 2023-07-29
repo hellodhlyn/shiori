@@ -1,4 +1,26 @@
 RSpec.describe Post, type: :model do
+  describe "scopes" do
+    let(:posts) do
+      [
+        create(:post, visibility: Post::Visibilities::PUBLIC),
+        create(:post, visibility: Post::Visibilities::PRIVATE),
+        create(:post, visibility: Post::Visibilities::UNLISTED),
+      ]
+    end
+
+    it ".with_invisible returns all posts" do
+      expect(Post.with_invisible).to match_array posts
+    end
+
+    it ".with_unlisted returns public and unlisted posts" do
+      expect(Post.with_unlisted).to match_array posts.values_at(0, 2)
+    end
+
+    it "default scope returns only public posts" do
+      expect(Post.all).to match_array posts.values_at(0)
+    end
+  end
+
   describe "#visible?" do
     let(:user) { create(:user) }
     let(:post) { create(:post, author: user) }
@@ -7,13 +29,19 @@ RSpec.describe Post, type: :model do
       expect(post.visible?(user)).to eq true
     end
 
-    it "returns true if the post is private and the user is the author" do
+    it "returns true if the post is private/unlisted and the user is the author" do
       post.update(visibility: Post::Visibilities::PRIVATE)
+      expect(post.visible?(user)).to eq true
+
+      post.update(visibility: Post::Visibilities::UNLISTED)
       expect(post.visible?(user)).to eq true
     end
 
-    it "returns false if the post is private and the user is not the author" do
+    it "returns false if the post is private/unlisted and the user is not the author" do
       post.update(visibility: Post::Visibilities::PRIVATE)
+      expect(post.visible?(create(:user))).to eq false
+
+      post.update(visibility: Post::Visibilities::UNLISTED)
       expect(post.visible?(create(:user))).to eq false
     end
   end

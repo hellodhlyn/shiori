@@ -48,6 +48,12 @@ RSpec.describe Queries::PostQuery do
       end
     end
 
+    context "with an unlisted post" do
+      before { post.update!(visibility: Post::Visibilities::UNLISTED) }
+      let(:args) { { uuid: post.uuid } }
+      it_behaves_like "returns the post"
+    end
+
     context "with a private post" do
       before { post.update!(visibility: Post::Visibilities::PRIVATE) }
       let(:args) { { uuid: post.uuid } }

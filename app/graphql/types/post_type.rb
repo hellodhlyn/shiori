@@ -20,6 +20,7 @@ class Types:: PostType < Types::Base::Object
   field :blobs, [Types::Interfaces::Blob], null: false
   field :visibility, Types::Enums::PostVisibility, null: false
   field :reaction_summary, "Types::ReactionSummaryType", null: false
+  field :featured_contents, [Types::FeaturedContentType], null: false
   field :created_at, GraphQL::Types::ISO8601DateTime, null: false
   field :updated_at, GraphQL::Types::ISO8601DateTime, null: false
 

@@ -16,6 +16,8 @@ class Post < ApplicationRecord
   has_many :tags, through: :post_tags
   has_many :blobs, -> { order(index: :asc) }, autosave: true, dependent: :destroy
   has_many :reactions
+  has_many :featured_content_posts
+  has_many :featured_contents, through: :featured_content_posts
   delegate :site, :to => :namespace
 
   validates :visibility, inclusion: { in: Visibilities::ALL }

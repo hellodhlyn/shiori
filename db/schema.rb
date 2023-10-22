@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_18_133050) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_22_133724) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,6 +34,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_18_133050) do
     t.jsonb "content", default: {}
     t.index ["post_id"], name: "index_blobs_on_post_id"
     t.index ["uuid"], name: "index_blobs_on_uuid", unique: true
+  end
+
+  create_table "featured_content_posts", force: :cascade do |t|
+    t.bigint "featured_content_id"
+    t.bigint "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["featured_content_id"], name: "index_featured_content_posts_on_featured_content_id"
+    t.index ["post_id"], name: "index_featured_content_posts_on_post_id"
+  end
+
+  create_table "featured_contents", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "slug", null: false
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "namespaces", force: :cascade do |t|

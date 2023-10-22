@@ -9,6 +9,9 @@ RSpec.describe Types::PostType, type: :graphql do
               content count
             }
           }
+          featuredContents {
+            title
+          }
         }
       }
     GQL
@@ -33,6 +36,21 @@ RSpec.describe Types::PostType, type: :graphql do
         { "content" => Reaction::LIKE, "count" => 2 },
         { "content" => Reaction::DISLIKE, "count" => 3 },
       ]
+    end
+  end
+
+  describe "#featured_contents" do
+    before do
+      create_list(:featured_content, 3, posts: [post])
+    end
+
+    subject do
+      execute_graphql(query_string, variables: { postUuid: post.uuid })
+    end
+
+    it "should return featured content groups" do
+      expect(subject["errors"]).to be_nil
+      expect(subject["data"]["post"]["featuredContents"].length).to eq(3)
     end
   end
 end

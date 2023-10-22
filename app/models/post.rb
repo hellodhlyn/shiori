@@ -5,8 +5,9 @@ class Post < ApplicationRecord
   class Visibilities
     PUBLIC  = "public"
     PRIVATE = "private"
+    UNLISTED = "unlisted"
 
-    ALL = [PUBLIC, PRIVATE]
+    ALL = [PUBLIC, PRIVATE, UNLISTED]
   end
 
   belongs_to :namespace
@@ -20,7 +21,10 @@ class Post < ApplicationRecord
   validates :visibility, inclusion: { in: Visibilities::ALL }
 
   default_scope { where(visibility: Visibilities::PUBLIC) }
-  scope :with_private, -> { unscope(where: :visibility) }
+  scope :with_invisible, -> { unscope(where: :visibility) }
+  scope :with_unlisted, -> {
+    unscope(where: :visibility).where(visibility: [Visibilities::PUBLIC, Visibilities::UNLISTED])
+  }
 
   def visible?(user)
     (visibility == Visibilities::PUBLIC) || (author == user)

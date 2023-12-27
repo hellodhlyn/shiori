@@ -39,7 +39,7 @@ class ApiToken
   private
 
   def self.secret
-    Rails.application.secrets.api_token_secret
+    Figjam.env.api_token_secret
   end
 
   def self.generate_jwt(payload, valid_until)

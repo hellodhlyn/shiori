@@ -13,7 +13,7 @@ gem "redis"
 gem "hiredis"
 
 # Web server
-gem "puma", "~> 5.6"
+gem "puma"
 gem "rack-cors", "~> 1.1"
 
 # Utilities
@@ -30,6 +30,7 @@ gem "faraday", "~> 2.2"
 # Ruby extensions
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
+gem "figjam"
 
 # Monitoring
 gem "newrelic_rpm"

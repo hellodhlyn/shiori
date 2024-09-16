@@ -1,13 +1,7 @@
 # SimpleCov should be loaded before any of application code
 require "simplecov"
-require "simplecov-lcov"
 
-SimpleCov::Formatter::LcovFormatter.config.report_with_single_file = true
-SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
-  SimpleCov::Formatter::HTMLFormatter,
-  SimpleCov::Formatter::LcovFormatter,
-])
-
+SimpleCov.formatters = SimpleCov::Formatter::HTMLFormatter
 SimpleCov.start "rails" do
   add_filter "/spec/"
 end
